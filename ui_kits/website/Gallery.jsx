@@ -2,64 +2,92 @@
 
 const TEMPLATES = [
   { id: 1, name: 'A Daily Sunday Strip',     occasion: 'Comic Strip',     surface: 'surface-gold-animated' },
-  { id: 2, name: 'Stars Aligned For You',   occasion: 'Horoscope',     surface: 'surface-gold-animated' },
-  { id: 3, name: 'Chamomile Twins',   occasion: 'Wedding',      surface: 'surface-silver-animated' },
-  { id: 4, name: 'Sunlight Through the Trees',   occasion: 'Illustration',   surface: 'surface-silver-animated' },
+  { id: 2, name: 'Stars Aligned For You',   occasion: 'Horoscope',       surface: 'surface-rosegold-animated' },
+  { id: 3, name: 'A Day In History',        occasion: 'On This Day',     surface: 'surface-silver-animated' },
+  { id: 4, name: 'Once Upon A Card',        occasion: 'Fairy Tale',      surface: 'surface-rosegold-animated' },
+  { id: 5, name: 'Find The Birthday',       occasion: "Where's Waldo",   surface: 'surface-trimetal-animated' },
+  { id: 6, name: 'Cards For The Strange',   occasion: 'Dark Holidays',   surface: 'surface-silver-animated' },
 ];
 
-function MusicPreviewButton({ label = 'Preview song' }) {
-  const [playing, setPlaying] = React.useState(false);
+function GalleryMusicOrnament() {
   return (
-    <button
-      type="button"
-      className={`souv-music-fab ${playing ? 'souv-music-playing' : ''}`}
-      onClick={() => setPlaying(!playing)}
-    >
-      <span className="souv-music-icon">{playing ? '	
-	
-	
-	
-	
-	
-	
-	
-' : '	
-	
-	
-'}</span>
-      <span className="souv-music-label">{label}</span>
-    </button>
+    <div className="souv-music-orn souv-music-orn-card" aria-hidden="true">
+      <div className="souv-music-row">
+        <span className="souv-music-note">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 17V5l11-2v12" /><circle cx="6" cy="17" r="2.5" /><circle cx="17" cy="15" r="2.5" /></svg>
+        </span>
+        <button className="souv-music-play" aria-label="Play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+        </button>
+        <div className="souv-music-track">
+          <div className="souv-music-progress" />
+          <div className="souv-music-handle" />
+        </div>
+        <span className="souv-music-time">0:42</span>
+      </div>
+    </div>
   );
 }
 
-const GalleryPage = () => (
-  <section className="so-gallery">
-    <h2 className="so-gallery-title">Find the Perfect Card</h2>
-    <div className="so-gallery-grid">
-      {TEMPLATES.map(temp => (
-        <div
-          key={temp.id}
-          className="so-card so-card-gallery"
-          style={{ background: `https://source.unsplash.com/720x480?auto=format,compress & 0.6` }}
-        >
-          <div className="so-card-theme so-theme-gold so-card-gallery-front">
-            <div className="so-card-content">
-              <span className="so-card-name">{temp.name}</span>
-              <span className="so-card-occasion">{temp.occasion}</span>
-            </div>
-            <MusicPreviewButton />
-          </div>
-          <div className="so-card-theme so-theme-gold so-card-gallery-back">
-            <div className="so-card-content">
-              <span className="so-card-name">{temp.name}</span>
-              <span className="so-card-occasion">{temp.occasion}</span>
-            </div>
-            <MusicPreviewButton />
+function Gallery() {
+  const [i, setI] = React.useState(0);
+  const trackRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!trackRef.current) return;
+    const el = trackRef.current.children[i];
+    if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+  }, [i]);
+
+  return (
+    <section className="souv-gallery">
+      <div className="souv-gallery-head">
+        <div className="souv-gallery-rail">
+          <div className="souv-gallery-rail-line" />
+          <Eyebrow>Gallery</Eyebrow>
+          <h2 className="souv-h1">
+            <span className="souv-hero-italic text-metallic-silver">Explore the</span>{' '}
+            <span className="souv-hero-italic text-metallic-rose-gold">possibilities</span>
+          </h2>
+          <p className="souv-gallery-sub">Hover any card to see it spin — every drop is a fresh occasion.</p>
+          <div className="souv-gallery-controls">
+            <button className="souv-chev" onClick={() => setI(Math.max(0, i - 1))} aria-label="Previous">‹</button>
+            <button className="souv-chev" onClick={() => setI(Math.min(TEMPLATES.length - 1, i + 1))} aria-label="Next">›</button>
           </div>
         </div>
-      ))}
-    </div>
-  </section>
-);
+        <div className="souv-gallery-track-wrap">
+          <div ref={trackRef} className="souv-gallery-track">
+            {TEMPLATES.map((c, idx) => (
+              <div key={c.id} className={`souv-gallery-card ${idx === i ? 'is-active' : ''}`}>
+                <div className="souv-gallery-flip">
+                  <div className="souv-gallery-flip-inner">
+                    <div className={`souv-gallery-surface souv-gallery-flip-face souv-gallery-flip-front ${c.surface}`}>
+                      <StampCorners />
+                      <div className="souv-gallery-surface-center">
+                        <div className="souv-gallery-occasion">{c.occasion}</div>
+                      </div>
+                      <MusicPreviewButton label={`Preview ${c.name} song`} />
+                    </div>
+                    <div className={`souv-gallery-surface souv-gallery-flip-face souv-gallery-flip-back ${c.surface}`}>
+                      <StampCorners />
+                      <div className="souv-gallery-surface-center">
+                        <div className="souv-gallery-occasion">{c.occasion}</div>
+                      </div>
+                      <MusicPreviewButton label={`Preview ${c.name} song`} />
+                    </div>
+                  </div>
+                </div>
+                <div className="souv-gallery-meta">
+                  <div className="souv-gallery-name">{c.name}</div>
+                  <div className="souv-gallery-price">From $11.99 CAD</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-export default GalleryPage;
+Object.assign(window, { Gallery });

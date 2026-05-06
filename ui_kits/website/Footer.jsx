@@ -1,45 +1,53 @@
 // Footer.jsx
 
 const SOCIAL = [
-  { label: 'Instagram', path: 'M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5A4.25 4.25 0 0 0 3.5 16.25V 7.75A4.25 4.25 0 0 0 7.75 3.5zM12 7A5 5 0 1 0 0 5zm0 10A5 5 0 1 0 0-5zm3.522-4.442a1 1 0 1 0 1.42-0.634l3.679 4.583L16.842 7.5H14a1 1 0 0 1 0 -2v-2h2v2a1 1 0 0 1 0 2h2z' },
-  { label: 'Facebook', path: 'M18 2h-12A6 6 0 0 0 0 6v12a6 6 0 0 0 6 6h3 1 0 0 0 1-1v-4h2a1 1 0 0 0 1-1V9H18V7a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h2V6a1 1 0 0 0-1 1H6v2h2V9h3a1 1 0 0 0 1-1V7a3 3 0 0 0-3 3v3z' },
-  { label: 'Twitter / X', path: 'M18.244 2H15.75L9.768 9.766 4.875 2 3 2h-1.696l4.638 6.285-4.956 4.249 3.322-4.249zM16.63 4h-2.825l-6.13 8.429H5.367l2.728 3.764 3.757-3.249 6.357-3.249z' }
+  { label: 'Instagram', path: 'M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm5.75-.88a1.13 1.13 0 1 1-2.25 0 1.13 1.13 0 0 1 2.25 0z' },
+  { label: 'TikTok',    path: 'M16.6 5.82A4.28 4.28 0 0 1 13.8 3h-3v12.4a2.6 2.6 0 0 1-2.6 2.6 2.6 2.6 0 0 1-2.6-2.6A2.6 2.6 0 0 1 8.2 12.8c.28 0 .56.04.82.12V9.84A5.59 5.59 0 0 0 8.2 9.6 5.6 5.6 0 0 0 2.6 15.2a5.6 5.6 0 0 0 5.6 5.6 5.6 5.6 0 0 0 5.6-5.6V9.74a7.28 7.28 0 0 0 4.2 1.34V8.08a4.28 4.28 0 0 1-1.4-2.26z' },
+  { label: 'YouTube',   path: 'M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.84.55 9.38.55 9.38.55s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z' },
+  { label: 'X',         path: 'M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.63 7.58H.49l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41z' },
 ];
 
-export default function Footer() {
+const FOOTER_COLS = [
+  { title: 'Create',    items: ['Build My Card', 'Personalize a Template', 'Community Cards', 'Songs & Images'] },
+  { title: 'Explore',   items: ['Gifts', 'Business', 'Pricing', 'Gallery'] },
+  { title: 'Account',   items: ['Library', 'My Cards & Songs', 'Sign In', 'Sign Up'] },
+  { title: 'Company',   items: ['About', 'Contact', 'Terms of Service', 'Privacy Policy'] },
+];
+
+function Footer() {
   return (
-    <footer className="so-footer">
-      <div className="so-footer-sitemap">
-        <div>
-          <h3>Product</h3>
-          <ul>
-            <li><a href="#">Personalize a Template</a></li>
-            <li><a href="#">Build My Card</a></li>
-            <li><a href="#">Community Cards</a></li>
-            <li><a href="#">Gifts</a></li>
-          </ul>
+    <footer className="souv-footer">
+      <OrnamentDivider />
+      <div className="souv-footer-inner">
+        <div className="souv-footer-brand">
+          <img src="../../assets/souvenote-wordmark.png" alt="Souvenote" className="souv-footer-mark" />
+          <p className="souv-footer-lede">
+            Cards worth keeping. Songs worth humming. Made together, sent in your name.
+          </p>
+          <div className="souv-footer-social">
+            {SOCIAL.map(s => (
+              <a key={s.label} className="souv-footer-social-btn" aria-label={s.label} href="#">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d={s.path} /></svg>
+              </a>
+            ))}
+          </div>
         </div>
-        <div>
-          <h3>Company</h3>
-          <ul>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="so-footer-bottom">
-        <span>  2024 Souvenote</span>
-        <div className="so-footer-social">
-          {SOCIAL.map(({ label, path }, i) => (
-            <a key={i} href="#" className="so-footer-social-link" aria-label={label}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d={path} />
-              </svg>
-            </a>
+        <div className="souv-footer-cols">
+          {FOOTER_COLS.map(col => (
+            <div key={col.title} className="souv-footer-col">
+              <div className="souv-footer-col-title">{col.title}</div>
+              <ul>
+                {col.items.map(i => <li key={i}><a href="#" className="souv-footer-link">{i}</a></li>)}
+              </ul>
+            </div>
           ))}
         </div>
+      </div>
+      <div className="souv-footer-base">
+        <span>© 2026 Souvenote · Made with care in Canada · Prices in CAD</span>
       </div>
     </footer>
   );
 }
+
+Object.assign(window, { Footer });

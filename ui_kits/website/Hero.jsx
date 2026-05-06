@@ -5,77 +5,86 @@ function MusicPreviewButton({ label = 'Preview song' }) {
   return (
     <button
       type="button"
-      className={`souv-music-fab ${playing ? 'souv-music-playing' : ''}`}
-      onClick={() => setPlaying(!playing)}
+      className={`souv-music-fab ${playing ? 'is-playing' : ''}`}
+      onClick={(e) => { e.stopPropagation(); setPlaying(p => !p); }}
+      aria-label={playing ? 'Pause song' : label}
     >
-      <span className="souv-music-icon">{playing ? '	
-	
-	
-	
-	
-	
-	
-	
-' : '	
-	
-	
-'}</span>
-      <span className="souv-music-label">{label}</span>
+      {playing ? (
+        // Pause icon
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <rect x="6" y="5" width="4" height="14" rx="1" />
+          <rect x="14" y="5" width="4" height="14" rx="1" />
+        </svg>
+      ) : (
+        // Music note + play
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M9 17V5l11-2v12" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="6" cy="17" r="2.4" />
+          <circle cx="17" cy="15" r="2.4" />
+        </svg>
+      )}
     </button>
   );
 }
 
-export default function Hero() {
-  const CARDS = [
-    { id: 1, front: 'Comic Strip', back: 'Handwritten Note', theme: 'gold', heroImage: '/hero-card-ceren.jpg', backImage: '/hero-card-moon.jpg' },
-    { id: 2, front: 'Star Gaze', back: 'Handwritten Note', theme: 'silver', heroImage: '/hero-card-ceren.jpg', backImage: '/hero-card-moon.jpg' },
-  ];
-
-  const [current, setCurrent] = React.useState(0);
-
-  const handleNext = () => setCurrent((c + 1) % CARDS.length);
-  const handlePrev = () => setCurrent((c - 1 + CARDS.length) % CARDS.length);
-
-  const card = CARDS[current];
-  const isFlipped = false;
-
+function HeroFlipCard() {
   return (
-    <section className="so-hero">
-      <div className="so-hero-content">
-        <h1 className="so-hero-headline">
-          <span className="so-headline-static">Explore the</span>
-          <span className="so-headline-dynamic">possibilities</span>
-        </h1>
-        <p className="so-hero-sub">Hover any card to see it spin — every drop is a fresh occasion.</p>
-        <div className="so-hero-ctas">
-          <a href="/create" className="so-cta-btn so-cta-primary">Choose a Template</a>
-          <a href="/build" className="so-cta-btn so-cta-secondary">Build My Card</a>
+    <div className="souv-flipcard souv-flipcard-spin">
+      <div className="souv-flipcard-inner">
+        {/* Front: gold gradient with the Souvenote main logo */}
+        <div className="souv-flipcard-face souv-flipcard-front">
+          <div className="souv-flipcard-back-stack">
+            <div className="souv-flipcard-mainlogo-wrap">
+              <img src="../../assets/MainLogo.png" alt="Souvenote" />
+            </div>
+          </div>
+          <MusicPreviewButton label="Preview Souvenote theme" />
+        </div>
+        {/* Back: real card artwork — moon and back */}
+        <div className="souv-flipcard-face souv-flipcard-back souv-flipcard-art-face">
+          <img src="../../assets/hero-card-moon.jpg" alt="I love you to the moon and back" className="souv-flipcard-art" />
+          <MusicPreviewButton label="Preview card song" />
         </div>
       </div>
-      <div className="so-hero-card-stage">
-        <div className="so-card-stack">
-          <div className="so-card so-card-hero so-theme-gold">
-            {card && (
-              <img className="so-card-image so-card-front" src={card.heroImage} alt="hero card"/>
-            )}
+    </div>
+  );
+}
+
+function Hero({ accentMetal = 'gold' }) {
+  const accentClass = {
+    gold:   'text-metallic-gold',
+    silver: 'text-metallic-silver',
+    rose:   'text-metallic-rose-gold',
+  }[accentMetal];
+
+  return (
+    <section className="souv-hero">
+      <div className="souv-hero-halo souv-hero-halo-1" />
+      <div className="souv-hero-halo souv-hero-halo-2" />
+
+      <div className="souv-hero-inner">
+        <div className="souv-hero-copy">
+          <h1 className="souv-hero-title">
+            <span className="souv-hero-italic text-metallic-silver">A card</span>{' '}
+            <span className={`souv-hero-italic ${accentClass}`} style={accentMetal === 'gold' ? { textShadow: '0 0 20px rgba(241,208,116,.42), 0 0 40px rgba(212,175,55,.2)' } : undefined}>worth</span>{' '}
+            <span className="souv-hero-italic text-metallic-rose-gold">keeping</span>
+          </h1>
+          <div className="souv-hero-ctas">
+            <button className="souv-btn-colorful"><span>Start for Free ↗</span></button>
+            <button className="souv-btn-log">Log In</button>
           </div>
-          <div className="so-card so-card-hero so-theme-silver">
-            {card && (
-              <img className="so-card-image so-card-front" src={card.heroImage} alt="hero card"/>
-            )}
-          </div>
+          <p className="souv-hero-lede">
+            Generate personalized cards and custom songs. Because the card you send should be as unique as they are.
+          </p>
+          <p className="souv-hero-trial">Includes 1 free image generation and 1 free song</p>
         </div>
-        <div className="so-hero-nav">
-          <button onClick={handlePrev} className="so-nav-btn">‹</button>
-          <div className="so-dots">
-            {CARDS.map((_, i) => (
-              <span key={i} className={i === current ? 'so-dot so-dot-active' : 'so-dot'}/>
-            ))}
-          </div>
-          <button onClick={handleNext} className="so-nav-btn">※</button>
+
+        <div className="souv-hero-stack">
+          <HeroFlipCard />
         </div>
-        <MusicPreviewButton label="Preview song" />
       </div>
     </section>
   );
 }
+
+Object.assign(window, { Hero, MusicPreviewButton });

@@ -1,30 +1,34 @@
-export default function HowItWorks() {
+// HowItWorks.jsx — three-step block with big watermark numerals
+
+const STEPS = [
+  { n: '01', t: 'Choose a moment',      d: 'Pick the occasion and tell us who it\u2019s for. Or upload a photo that tells the story for you.' },
+  { n: '02', t: 'Let AI craft the card', d: 'Souvenote writes the words, designs the face, and composes a song\u00a0\u2014 tailored to your moment.' },
+  { n: '03', t: 'Print, send, keep',    d: 'Order the physical card for $11.99 CAD. Share the digital version\u00a0\u2014 or save it to your library.' },
+];
+
+function HowItWorks() {
   return (
-    <section className="so-how-it-works">
-      <h2>How It Works</h2>
-      <ol className="so-steps">
-        <li className="so-step">
-          <span className="so-step-number">1</span>
-          <div>
-            <h3>Choose a Template</h3>
-            <p>Browse our collection of beautifully designed card templates.</p>
+    <section className="souv-steps">
+      <div className="souv-steps-head">
+        <Eyebrow>How it works</Eyebrow>
+        <h2 className="souv-h1">
+          <span className="souv-hero-italic text-metallic-silver">Three steps,</span>{' '}
+          <span className="souv-hero-italic text-metallic-rose-gold">one keepsake.</span>
+        </h2>
+      </div>
+      <div className="souv-steps-grid">
+        {STEPS.map(s => (
+          <div key={s.n} className="souv-step-card">
+            <StampCorners />
+            <div className="souv-step-num">{s.n}</div>
+            <div className="souv-step-title">{s.t}</div>
+            <div className="souv-step-body">{s.d}</div>
           </div>
-        </li>
-        <li className="so-step">
-          <span className="so-step-number">2</span>
-          <div>
-            <h3>Add Your Message</h3>
-            <p>Personalize with your photos, text, and music memory.</p>
-          </div>
-        </li>
-        <li className="so-step">
-          <span className="so-step-number">3</span>
-          <div>
-            <h3>Send or Print</h3>
-            <p>Deliver digitally or as a physical printed card.</p>
-          </div>
-        </li>
-      </ol>
+        ))}
+      </div>
+      <OrnamentDivider />
     </section>
   );
 }
+
+Object.assign(window, { HowItWorks });
